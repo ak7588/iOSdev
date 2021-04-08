@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -121,6 +122,21 @@
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nJN-th-c5K" userLabel="Timer View">
                                         <rect key="frame" x="0.0" y="536.66666666666663" width="358" height="229.33333333333337"/>
+                                        <subviews>
+                                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="efX-ZZ-jgO">
+                                                <rect key="frame" x="0.0" y="112.33333333333337" width="358" height="6"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="5" id="pX6-f5-uVG"/>
+                                                </constraints>
+                                                <color key="progressTintColor" systemColor="systemYellowColor"/>
+                                                <color key="trackTintColor" systemColor="systemGray2Color"/>
+                                            </progressView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="efX-ZZ-jgO" firstAttribute="leading" secondItem="nJN-th-c5K" secondAttribute="leading" id="i4i-Ff-Pry"/>
+                                            <constraint firstItem="efX-ZZ-jgO" firstAttribute="centerY" secondItem="nJN-th-c5K" secondAttribute="centerY" id="tbR-xd-xFW"/>
+                                            <constraint firstAttribute="trailing" secondItem="efX-ZZ-jgO" secondAttribute="trailing" id="xYO-eu-zvR"/>
+                                        </constraints>
                                     </view>
                                 </subviews>
                             </stackView>
@@ -134,15 +150,25 @@
                             <constraint firstAttribute="trailingMargin" secondItem="wI6-ag-afn" secondAttribute="trailing" id="dky-ZA-Z3J"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="progressBar" destination="efX-ZZ-jgO" id="Ijc-Y4-OuS"/>
+                        <outlet property="titleLabel" destination="XLm-5r-pSP" id="dlU-EV-dzg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="137.94642857142856"/>
+            <point key="canvasLocation" x="136.92307692307691" y="137.91469194312796"/>
         </scene>
     </scenes>
     <resources>
         <image name="hard_egg" width="287.66665649414062" height="366.33334350585938"/>
         <image name="medium_egg" width="288" height="363.33334350585938"/>
         <image name="soft_egg" width="287" height="365.33334350585938"/>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>
