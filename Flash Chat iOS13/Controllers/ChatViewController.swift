@@ -13,15 +13,52 @@ class ChatViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var messageTextfield: UITextField!
+        
+    var messages: [Message] = []
+    let db = Firestore.firestore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
         title = K.appName
         navigationItem.hidesBackButton = true
+        tableView.register(UINib(nibName: K.cellNibName, bundle: nil), forCellReuseIdentifier: K.cellIdentifier)
+        loadMessages()
+    }
+    
+    func loadMessages() {
+        db.collection(K.FStore.collectionName).addSnapshotListener { (querySnapshot, error) in
+            self.messages = []
+            if let e = error {
+                print(e)
+            } else {
+                if let snapshotDocs = querySnapshot?.documents {
+                    for i in snapshotDocs {
+                        let data = i.data()
+                        if let sender = data[K.FStore.senderField] as? String, let body = data[K.FStore.bodyField] as? String {
+                            let newMessage = Message(sender: sender, body: body)
+                            
+                            self.messages.append(newMessage)
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
     @IBAction func sendPressed(_ sender: UIButton) {
+        if let messageBody = messageTextfield.text, let messageSender = Auth.auth().currentUser?.email {
+            db.collection(K.FStore.collectionName).addDocument(data: [K.FStore.senderField: messageSender, K.FStore.bodyField: messageBody]) { (error) in
+                if let e = error {
+                    print(e)
+                } else {
+                    print("Success!")
+                }
+            }
+        }
     }
     
     @IBAction func logoutPressed(_ sender: UIBarButtonItem) {
@@ -33,13 +70,6 @@ class ChatViewController: UIViewController {
           print ("Error signing out: %@", signOutError)
         }
     }
-    
-    var messages: [Message] = [
-        Message(sender: "amiko23@mail.ru", body: "Hey!"),
-        Message(sender: "amiko23@gmail.com", body: "Hello!"),
-        Message(sender: "amiko23@mail.ru", body: "What's up?!")
-    ]
-    
 }
 
 // MARK: - Table View
@@ -49,7 +79,7 @@ extension ChatViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.cellIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: K.cellIdentifier, for: indexPath) as! MessageCell
         cell.textLabel?.text = messages[indexPath.row].body
         return cell
     }
