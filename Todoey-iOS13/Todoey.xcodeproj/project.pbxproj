@@ -42,6 +42,7 @@
 		934475F1264FC6D60021DD02 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				934475F826510BF00021DD02 /* DataModel.xcdatamodeld */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -58,7 +59,6 @@
 			isa = PBXGroup;
 			children = (
 				EB2BE4FD239524DB00FB933B /* ToDoListVC.swift */,
-				934475F826510BF00021DD02 /* DataModel.xcdatamodeld */,
 				9344764E26524A860021DD02 /* CategoryVC.swift */,
 			);
 			path = Controllers;
@@ -382,8 +382,7 @@
 				934475F926510BF00021DD02 /* DataModel.xcdatamodel */,
 			);
 			currentVersion = 934475F926510BF00021DD02 /* DataModel.xcdatamodel */;
-			name = DataModel.xcdatamodeld;
-			path = ../Models/DataModel.xcdatamodeld;
+			path = DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
